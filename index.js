@@ -58,7 +58,7 @@ const ramen = () => {
         }
         
         const geometry = new THREE.LatheGeometry(points, 30);
-        const material = new THREE.MeshPhongMaterial({color: 0xffffff});
+        const material = new THREE.MeshPhongMaterial({color: 0xffffff, side: THREE.DoubleSide});
         const lathe = new THREE.Mesh(geometry, material);
         scene.add(lathe);
     }
@@ -66,7 +66,7 @@ const ramen = () => {
     //器の底
     {
         const geometry = new THREE.CircleGeometry(5.05, 30);
-        const material = new THREE.MeshPhongMaterial({color: 0xffffff});
+        const material = new THREE.MeshPhongMaterial({color: 0xffffff, side: THREE.DoubleSide});
         const bottom = new THREE.Mesh(geometry, material);
         bottom.rotation.x = Math.PI / 2;
 
@@ -74,6 +74,8 @@ const ramen = () => {
     }
 
     //箸
+    scene.add(chopsticks);
+
     {
         const geometry = new THREE.BoxGeometry(25, 0.5, 0.5);
         const material = new THREE.MeshPhongMaterial({color: 0xff0000});
@@ -90,13 +92,12 @@ const ramen = () => {
     //箸を動かす棒
     {
         const geometry = new THREE.CylinderGeometry(0.3, 0.3, 17, 32);
-        const material = new THREE.MeshPhongMaterial({color: 0xc9caca});
+        const material = new THREE.MeshPhongMaterial({color: 0xc9caca, metal: true});
         const cylinder = new THREE.Mesh(geometry, material);
-        cylinder.position.y = -6.5;
+        cylinder.position.y = -6.6;
 
         chopsticks.add(cylinder);
     }
-    scene.add(chopsticks);
 
     //スープ
     {
@@ -113,9 +114,10 @@ const ramen = () => {
 
     //麺
     {
+        const material = new THREE.MeshPhongMaterial({color: 0xdebf68});
         const f = i => {
             const x1 = 6 * Math.random() - 2;
-            const y = 0.5 * Math.random() + 10;
+            const y = 0.5 * Math.random() + 10.5;
             const z1 = 0.2 * Math.random() + 0.4;
             const z2 = -0.2 * Math.random() - 0.4;
             const path = new THREE.SplineCurve3([
@@ -126,7 +128,6 @@ const ramen = () => {
             ]);
             
             const geometry = new THREE.TubeGeometry(path, 30, 0.2, 30, false);
-            const material = new THREE.MeshPhongMaterial({color: 0xdebf68});
             const noodle = new THREE.Mesh(geometry, material);
             noodle.position.y = -10;
             chopsticks.add(noodle);
